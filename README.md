@@ -46,17 +46,15 @@ Results and queries are documented here, with references to **screenshots** and 
 ```bash
 git clone https://github.com/yourusername/task4-sql-analysis.git
 cd task4-sql-analysis
+```
 
-
-
-Open the Database
+### **Open the Database
 Place olist.sqlite in the repo folder.
 
-Launch SQLite:
-
-bash
-Copy code
+## Launch SQLite:
+```bash
 sqlite3 olist.sqlite
+```
 Run .tables to verify database tables.
 
 🛠 Usage
@@ -70,19 +68,22 @@ To reset output:
 
 📊 Example Queries
 1️⃣ Total Orders by Status
+```bash
 SELECT order_status, COUNT(*) AS count 
 FROM orders 
 GROUP BY order_status 
 ORDER BY count DESC;
+```
 2️⃣ Top 10 Cities by Unique Customers
-sql
-Copy code
+```bash
 SELECT customer_city, COUNT(customer_unique_id) AS total_customers 
 FROM customers 
 GROUP BY customer_city 
 ORDER BY total_customers DESC 
 LIMIT 10;
+```
 3️⃣ Top 5 Products by Sales Volume
+```bash
 SELECT products.product_id, product_category_name_english, COUNT(order_items.order_item_id) AS units_sold 
 FROM products 
 JOIN order_items ON products.product_id = order_items.product_id 
@@ -91,16 +92,19 @@ JOIN product_category_name_translation
 GROUP BY products.product_id 
 ORDER BY units_sold DESC 
 LIMIT 5;
+```
 4️⃣ Repeat Customers View
+```bash
 CREATE VIEW repeat_customers AS 
 SELECT customer_unique_id, COUNT(order_id) AS order_count 
 FROM customers 
 JOIN orders ON customers.customer_id = orders.customer_id 
 GROUP BY customer_unique_id 
 HAVING order_count > 1;
-
 SELECT * FROM repeat_customers LIMIT 10;
+```
 5️⃣ Best Performing Categories by Average Review Score
+```bash
 SELECT p.product_category_name, AVG(r.review_score) AS avg_score
 FROM products p
 JOIN order_items oi ON p.product_id = oi.product_id
@@ -108,7 +112,7 @@ JOIN order_reviews r ON oi.order_id = r.order_id
 GROUP BY p.product_category_name
 ORDER BY avg_score DESC
 LIMIT 5;
-📌 More queries (including optimizations with indexes and query plans) are documented in report.md and report.pdf.
+```
 
 📈 Results and Insights
 Customer Distribution: São Paulo leads with ~15,540 unique customers.
